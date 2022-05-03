@@ -21,4 +21,5 @@ class BlogFormulario(forms.Form):
 
     titulo = forms.CharField()
     subtitulo = forms.CharField()
+    contenido = forms.CharField()
     autor = forms.CharField()

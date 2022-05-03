@@ -6,4 +6,25 @@
 
 <h1>Bienvenido al blog de coder</h1>
 
+
+{% endblock %}
+
+{% block contenido2 %}
+{% if miFormulario.errors %}
+
+<p style="color: red">Datos incorrectos</p>
+
+{% endif %}
+
+<form action="" method="POST">{% csrf_token %}
+
+    <table>
+
+        {{miFormulario.as_table}}
+
+    </table>>
+
+    <input type="submit" value="Enviar">
+
+</form>
 {% endblock %}

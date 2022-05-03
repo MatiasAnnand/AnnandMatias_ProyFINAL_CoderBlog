@@ -7,26 +7,6 @@ from Aplicacion.models import Blog, Estudiante, Profesor
 
 def profesor(request):
 
-    return render(request, "Aplicacion/profesor.html")
-
-
-def estudiante(request):
-
-    return render(request, "Aplicacion/estudiante.html")
-
-
-def blog(request):
-
-    return render(request, "Aplicacion/blog.html")
-
-
-def inicio(request):
-
-    return render(request, "Aplicacion/inicio.html")
-
-
-def profeFormulario(request):
-
     if request.method == 'POST':
 
         miFormulario = ProfeFormulario(request.POST)
@@ -47,10 +27,10 @@ def profeFormulario(request):
     else:
         miFormulario = ProfeFormulario()
 
-    return render(request, "Aplicacion/profeFormulario.html", {"miFormulario":miFormulario})
+    return render(request, "Aplicacion/profesor.html", {"miFormulario": miFormulario})
 
 
-def estudFormulario(request):
+def estudiante(request):
 
     if request.method == 'POST':
 
@@ -72,10 +52,10 @@ def estudFormulario(request):
     else:
         miFormulario = EstudFormulario()
 
-    return render(request, "Aplicacion/estudFormulario.html", {"miFormulario":miFormulario})
+    return render(request, "Aplicacion/estudiante.html", {"miFormulario": miFormulario})
 
 
-def blogFormulario(request):
+def blog(request):
 
     if request.method == 'POST':
 
@@ -97,12 +77,18 @@ def blogFormulario(request):
     else:
         miFormulario = BlogFormulario()
 
-    return render(request, "Aplicacion/blogFormulario.html", {"miFormulario":miFormulario})
+    return render(request, "Aplicacion/blog.html", {"miFormulario": miFormulario})
+
+
+def inicio(request):
+
+    return render(request, "Aplicacion/inicio.html")
 
 
 def busquedaBlog(request):
-    
+
     return render(request, "Aplicacion/busquedaBlog.html")
+
 
 def buscar(request):
 
@@ -111,7 +97,7 @@ def buscar(request):
         titulo = request.GET['titulo']
         blog = Blog.objects.filter(titulo__icontains=titulo)
 
-        return render(request, "Aplicacion/resultadosBusqueda.html", {"blog":blog, "titulo":titulo})
+        return render(request, "Aplicacion/resultadosBusqueda.html", {"blog": blog, "titulo": titulo})
 
     else:
 

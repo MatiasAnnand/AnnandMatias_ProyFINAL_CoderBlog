@@ -3,13 +3,21 @@ from django.shortcuts import render
 from Aplicacion.models import Profesor
 
 
-def profesor(self):
+def profesor(request):
 
-    profe1 = Profesor(nombre="Pepe", apellido="Pascual",
-                      email="peppas@hotmail.com", comision="20201")
+    return render(request, "Aplicacion/profesor.html")
 
-    profe1.save()
 
-    documento = f"El profesor es {profe1.nombre} de apellido {profe1.apellido}, de la comision {profe1.comision}. Mail: {profe1.email}."
+def estudiante(request):
 
-    return HttpResponse(documento)
+    return render(request,"Aplicacion/estudiante.html")
+
+
+def blog(request):
+
+    return render(request, "Aplicacion/blog.html")
+
+
+def inicio(request):
+
+    return render(request, "Aplicacion/inicio.html")

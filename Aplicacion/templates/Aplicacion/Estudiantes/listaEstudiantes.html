@@ -1,0 +1,34 @@
+{% extends "Aplicacion/padre.html" %} 
+
+{% block contenidoModificable %}
+
+    <h1>Coder Estudiantes</h1>
+
+{% endblock %}
+
+{% block contenido2 %}
+    
+    <a href="{% url 'StudentCreate' %}">Crear</a>
+
+    <ul>
+        {% for estudiante in object_list %}
+
+        <li>
+
+            <p>Nombre: {{estudiante.nombre}}</p> 
+
+            <p>
+                
+                <a href="{% url 'StudentDetail' estudiante.id %}">Ver</a>
+                <a href="{% url 'StudentEdit' estudiante.id %}">Editar</a>
+                <a href="{% url 'StudentDelete' estudiante.id %}">Borrar</a>
+                
+            </p>
+
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+{% endblock %}

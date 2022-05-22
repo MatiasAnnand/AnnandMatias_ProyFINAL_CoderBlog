@@ -4,15 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Formulario Profesores</title>
 </head>
 <body>
-    <form action="/Aplicacion/buscar" method="GET">
+    <form action="" method="POST">{% csrf_token %}
 
-        <input type="text" name="titulo" id="titulo">
-
-        <input type="submit" value="Buscar">
-
+        <table>
+    
+            {{miFormulario.as_table}}
+    
+        </table>>
+    
+        <input type="submit" value="Enviar">
+    
     </form>
 </body>
 </html>

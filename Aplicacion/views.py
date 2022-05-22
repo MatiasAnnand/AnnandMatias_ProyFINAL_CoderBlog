@@ -1,10 +1,21 @@
-from sqlite3 import Cursor
+from msilib.schema import ListView
+from pyexpat import model
+#from sqlite3 import Cursor
 from django.http import HttpResponse
 from django.shortcuts import render
 from Aplicacion.forms import BlogFormulario, ProfeFormulario, EstudFormulario
 from Aplicacion.models import Blog, Estudiante, Profesor
+from django.views.generic import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 
+# Vista Pagina Principal
+def inicio(request):
+
+    return render(request, "Aplicacion/inicio.html")
+
+# Vista para agregar un profesor
 def profesor(request):
 
     if request.method == 'POST':
@@ -27,9 +38,9 @@ def profesor(request):
     else:
         miFormulario = ProfeFormulario()
 
-    return render(request, "Aplicacion/profesor.html", {"miFormulario": miFormulario})
+    return render(request, "Aplicacion/Profesores/profesor.html", {"miFormulario": miFormulario})
 
-
+# Vista para agregar un estudiante
 def estudiante(request):
 
     if request.method == 'POST':
@@ -52,9 +63,9 @@ def estudiante(request):
     else:
         miFormulario = EstudFormulario()
 
-    return render(request, "Aplicacion/estudiante.html", {"miFormulario": miFormulario})
+    return render(request, "Aplicacion/Estudiantes/estudiante.html", {"miFormulario": miFormulario})
 
-
+# Vista para crear un Posteo del Blog
 def blog(request):
 
     if request.method == 'POST':
@@ -77,19 +88,15 @@ def blog(request):
     else:
         miFormulario = BlogFormulario()
 
-    return render(request, "Aplicacion/blog.html", {"miFormulario": miFormulario})
+    return render(request, "Aplicacion/Blog/blog.html", {"miFormulario": miFormulario})
 
 
-def inicio(request):
-
-    return render(request, "Aplicacion/inicio.html")
-
-
+# Vista para buscar un posteo en el Blog
 def busquedaBlog(request):
 
-    return render(request, "Aplicacion/busquedaBlog.html")
+    return render(request, "Aplicacion/Blog/busquedaBlog.html")
 
-
+# Busqueda por el filtro del titulo de un blog.
 def buscar(request):
 
     if request.GET['titulo']:
@@ -97,10 +104,92 @@ def buscar(request):
         titulo = request.GET['titulo']
         blog = Blog.objects.filter(titulo__icontains=titulo)
 
-        return render(request, "Aplicacion/resultadosBusqueda.html", {"blog": blog, "titulo": titulo})
+        return render(request, "Aplicacion/Blog/resultadosBusqueda.html", {"blog": blog, "titulo": titulo})
 
     else:
 
         respuesta = "No enviaste datos."
 
     return HttpResponse(respuesta)
+
+# Vista para mostrar los Posteos del Blog usando Clases.
+class MuroBlog(ListView):
+    model = Blog
+    template_name = "Aplicacion/Blog/listaBlogs.html"
+
+# Vista para mostrar el detalle de los Blogs usando Clases (CRUD con Clases)
+class BlogDetalle(DetailView):
+    model = Blog
+    template_name = "Aplicacion/Blog/blogDetalle.html"
+
+# Vista para crear Blogs usando Clases (CRUD con Clases)
+class BlogCreacion(CreateView):
+    model = Blog
+    success_url = "/Aplicacion/Blog/blog/lista"
+    fields = ['titulo', 'subtitulo', 'contenido', 'autor']
+
+# Vista para mostrar/ actualizar los BLogs usando Clases (CRUD con Clases)
+class BlogUpdate(UpdateView):
+    model = Blog
+    success_url = "/Aplicacion/Blog/blog/lista"
+    fields = ['titulo', 'subtitulo', 'contenido', 'autor']
+
+class BlogDelete(DeleteView):
+    model = Blog
+    success_url = "/Aplicacion/Blog/blog/lista"
+
+
+# Vista para mostrar el listado de Profesores usando Clases.
+class ProfesorList(ListView):
+    model = Profesor
+    template_name = "Aplicacion/Profesores/listaProfesores.html"
+
+# Vista para mostrar el detalle de los Profesores usando Clases (CRUD con Clases)
+class ProfesorDetalle(DetailView):
+    model = Profesor
+    template_name = "Aplicacion/Profesores/profesorDetalle.html"
+
+# Vista para agregar Profesores usando Clases (CRUD con Clases)
+class ProfesorCreacion(CreateView):
+    model = Profesor
+    success_url = "/Aplicacion/Profesores/profesor/lista"
+    fields = ['nombre', 'apellido', 'email', 'comision']
+
+# Vista para mostrar/ actualizar los Profesores usando Clases (CRUD con Clases)
+class ProfesorUpdate(UpdateView):
+    model = Profesor
+    success_url = "/Aplicacion/Profesores/profesor/lista"
+    fields = ['nombre', 'apellido', 'email', 'comision']
+
+# Eliminar Profesores
+class ProfesorDelete(DeleteView):
+    model = Profesor
+    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+
+
+# Vista para mostrar el listado de Estudiantes usando Clases.
+class EstudianteList(ListView):
+    model = Estudiante
+    template_name = "Aplicacion/Estudiantes/listaEstudiantes.html"
+
+# Vista para mostrar el detalle de los Estudiantes usando Clases (CRUD con Clases)
+class EstudianteDetalle(DetailView):
+    model = Estudiante
+    template_name = "Aplicacion/Estudiantes/estudianteDetalle.html"
+
+# Vista para agregar Estudiantes usando Clases (CRUD con Clases)
+class EstudianteCreacion(CreateView):
+    model = Estudiante
+    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    fields = ['nombre', 'apellido', 'email', 'comision']
+
+# Vista para mostrar/ actualizar los Estudiantes usando Clases (CRUD con Clases)
+class EstudianteUpdate(UpdateView):
+    model = Estudiante
+    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    fields = ['nombre', 'apellido', 'email', 'comision']
+
+# Eliminar Estudiantes
+class EstudianteDelete(DeleteView):
+    model = Estudiante
+    success_url = "/Aplicacion/Estudiantes/estudiante/lista"

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Profesores</title>
+</head>
+<body>
+    <p>Nombre del Profesor: <i>{{ profesor.nombre }} </i></p>
+    <p>Apellido: <i>{{ profesor.apellido }}</i></p>
+    <p>Email: <i>{{ profesor.email }} </i></p>
+    <p>Comisión: <i>{{ profesor.comision }} </i></p>
+    <p>
+        <a href="{% url 'ListProfesores' %}">Regresar</a>
+    </p>
+</body>
+</html>

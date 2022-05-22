@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles Blog</title>
+</head>
+<body>
+    <p>Título del blog: <i>{{ blog.titulo }} </i></p>
+    <p>Subtítulo: <i>{{ blog.subtitulo }}</i></p>
+    <p>Contenido: <i>{{ blog.contenido }} </i></p>
+    <p>Autor: <i>{{ blog.autor }} </i></p>
+    <p>
+        <a href="{% url 'ListBlogs' %}">Regresar</a>
+    </p>
+</body>
+</html>

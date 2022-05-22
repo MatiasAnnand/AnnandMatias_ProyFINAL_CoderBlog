@@ -1,16 +1,73 @@
 from msilib.schema import ListView
 from pyexpat import model
-#from sqlite3 import Cursor
+from sqlite3 import Cursor
 from django.http import HttpResponse
 from django.shortcuts import render
-from Aplicacion.forms import BlogFormulario, ProfeFormulario, EstudFormulario
+from Aplicacion.forms import BlogFormulario, ProfeFormulario, EstudFormulario, RegistroFormulario
 from Aplicacion.models import Blog, Estudiante, Profesor
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.mixins import LoginRequiredMixin  #No se pueden utilizar decoradores con Clases. Para Vista basada en Clases se usa Mixins
+from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth import login, authenticate, logout
+
+
+# Vista para registrarse
+def register(request):
+
+    if request.method == 'POST':
+
+        form = RegistroFormulario(request.POST)
+
+        if form.is_valid():
+
+            user=form.cleaned_data['username']
+            form.save()
+
+            return render(request, "Aplicacion/inicio.html", {'mensaje':"Usuario Creado"})
+
+    else:
+
+        form = RegistroFormulario()  # formulario de django que permite crear usuarios
+
+    return render(request, "Aplicacion/registro.html", {'form':form})
+
+
+# Vista para iniciar sesion
+def login_request(request):
+    
+    if request.method == 'POST':
+
+        form = AuthenticationForm(request, data = request.POST)
+
+        if form.is_valid():
+
+            usuario=form.cleaned_data.get('username')
+            clave=form.cleaned_data.get('password')
+
+            user=authenticate(username=usuario, password=clave)
+
+            if user:
+
+                login(request, user)
+
+                return render(request, "Aplicacion/inicio.html", {'mensaje':f"Bienvenido {user}"})
+
+        else:
+
+            return render(request, "Aplicacion/inicio.html", {'mensaje':"¡Error. Datos incorrectos!"})
+
+    else:
+
+        form = AuthenticationForm()
+
+    return render(request, "Aplicacion/login.html", {'form':form})
 
 
 # Vista Pagina Principal
+@login_required
 def inicio(request):
 
     return render(request, "Aplicacion/inicio.html")
@@ -112,8 +169,8 @@ def buscar(request):
 
     return HttpResponse(respuesta)
 
-# Vista para mostrar los Posteos del Blog usando Clases.
-class MuroBlog(ListView):
+# Vista para mostrar los Posteos del Blog usando Clases (login required Mixin).
+class MuroBlog(LoginRequiredMixin, ListView):
     model = Blog
     template_name = "Aplicacion/Blog/listaBlogs.html"
 
@@ -139,8 +196,8 @@ class BlogDelete(DeleteView):
     success_url = "/Aplicacion/Blog/blog/lista"
 
 
-# Vista para mostrar el listado de Profesores usando Clases.
-class ProfesorList(ListView):
+# Vista para mostrar el listado de Profesores usando Clases (login required Mixin).
+class ProfesorList(LoginRequiredMixin, ListView):
     model = Profesor
     template_name = "Aplicacion/Profesores/listaProfesores.html"
 
@@ -167,8 +224,8 @@ class ProfesorDelete(DeleteView):
     success_url = "/Aplicacion/Estudiantes/estudiante/lista"
 
 
-# Vista para mostrar el listado de Estudiantes usando Clases.
-class EstudianteList(ListView):
+# Vista para mostrar el listado de Estudiantes usando Clases (login required Mixin).
+class EstudianteList(LoginRequiredMixin, ListView):
     model = Estudiante
     template_name = "Aplicacion/Estudiantes/listaEstudiantes.html"
 

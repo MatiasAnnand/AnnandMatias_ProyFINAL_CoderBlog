@@ -11558,7 +11558,7 @@ body {
   height: auto;
   min-height: 35rem;
   padding: 15rem 0;
-  background: rgba(250, 250, 10, 0.9), url("../assets/img/bg-masthead.jpg");
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.1) 0%, rgba(0, 0, 0, 0.5) 75%, #000 100%), url("../assets/img/bg-masthead.jpg");
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: scroll;
@@ -11569,8 +11569,8 @@ body {
   font-size: 2.5rem;
   line-height: 2.5rem;
   letter-spacing: 0.8rem;
-  background: rgba(250, 250, 10, 0.9);
-  -webkit-text-fill-color: rgba(250, 250, 10, 0.9);
+  background: rgba(214, 250, 10, 0.9);
+  -webkit-text-fill-color: rgba(214, 250, 10, 0.9);
   -webkit-background-clip: text;
           background-clip: text;
 }

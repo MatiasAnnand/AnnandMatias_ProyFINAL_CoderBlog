@@ -1,5 +1,6 @@
-from django.urls import path
+from django.urls import path, re_path
 from Aplicacion import views
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
     path('profesores/', views.profesor, name='Profesores'),  # URL para la vista por defecto creada en views.py
@@ -10,20 +11,24 @@ urlpatterns = [
     path('buscar/', views.buscar),
 
     path("blog/lista", views.MuroBlog.as_view(), name='ListBlogs'),
-    path(r'^(?P<pk>\d+)$', views.BlogDetalle.as_view(), name='Detail'),
-    path(r'^nuevo$', views.BlogCreacion.as_view(), name='Create'),
-    path(r'^editar/(?P<pk>\d+)$', views.BlogUpdate.as_view(), name='Edit'),
-    path(r'^borrar/(?P<pk>\d+)$', views.BlogDelete.as_view(), name='Delete'),
+    re_path(r'^(?P<pk>\d+)$', views.BlogDetalle.as_view(), name='Detail'),
+    re_path(r'^nuevo$', views.BlogCreacion.as_view(), name='Create'),
+    re_path(r'^editar/(?P<pk>\d+)$', views.BlogUpdate.as_view(), name='Edit'),
+    re_path(r'^borrar/(?P<pk>\d+)$', views.BlogDelete.as_view(), name='Delete'),
 
     path("profesor/lista", views.ProfesorList.as_view(), name='ListProfesores'),
-    path(r'^(?P<pk>\d+)$', views.ProfesorDetalle.as_view(), name='TeacherDetail'),
-    path(r'^nuevo$', views.ProfesorCreacion.as_view(), name='TeacherCreate'),
-    path(r'^editar/(?P<pk>\d+)$', views.ProfesorUpdate.as_view(), name='TeacherEdit'),
-    path(r'^borrar/(?P<pk>\d+)$', views.ProfesorDelete.as_view(), name='TeacherDelete'),
+    re_path(r'^(?P<pk>\d+)$', views.ProfesorDetalle.as_view(), name='TeacherDetail'),
+    re_path(r'^nuevo$', views.ProfesorCreacion.as_view(), name='TeacherCreate'),
+    re_path(r'^editar/(?P<pk>\d+)$', views.ProfesorUpdate.as_view(), name='TeacherEdit'),
+    re_path(r'^borrar/(?P<pk>\d+)$', views.ProfesorDelete.as_view(), name='TeacherDelete'),
 
     path("estudiante/lista", views.EstudianteList.as_view(), name='ListEstudiantes'),
-    path(r'^(?P<pk>\d+)$', views.EstudianteDetalle.as_view(), name='StudentDetail'),
-    path(r'^nuevo$', views.EstudianteCreacion.as_view(), name='StudentCreate'),
-    path(r'^editar/(?P<pk>\d+)$', views.EstudianteUpdate.as_view(), name='StudentEdit'),
-    path(r'^borrar/(?P<pk>\d+)$', views.EstudianteDelete.as_view(), name='StudentDelete'),
+    re_path(r'^(?P<pk>\d+)$', views.EstudianteDetalle.as_view(), name='StudentDetail'),
+    re_path(r'^nuevo$', views.EstudianteCreacion.as_view(), name='StudentCreate'),
+    re_path(r'^editar/(?P<pk>\d+)$', views.EstudianteUpdate.as_view(), name='StudentEdit'),
+    re_path(r'^borrar/(?P<pk>\d+)$', views.EstudianteDelete.as_view(), name='StudentDelete'),
+
+    path('login', views.login_request, name='Login'),
+    path('register', views.register, name='Register'),
+    path('logout', LogoutView.as_view(template_name='Aplicacion/logout.html'), name='Logout'),
 ]

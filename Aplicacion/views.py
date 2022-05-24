@@ -4,7 +4,7 @@ from sqlite3 import Cursor
 from django.http import HttpResponse
 from django.shortcuts import render
 from Aplicacion.forms import BlogFormulario, ProfeFormulario, EstudFormulario, RegistroFormulario
-from Aplicacion.models import Blog, Estudiante, Profesor
+from Aplicacion.models import Avatar, Blog, Estudiante, Profesor
 from django.views.generic import ListView
 from django.views.generic.detail import DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
@@ -70,7 +70,9 @@ def login_request(request):
 @login_required
 def inicio(request):
 
-    return render(request, "Aplicacion/inicio.html")
+    avatares = Avatar.objects.filter(user=request.user.id)
+    imagen = avatares[0].imagen.url
+    return render(request, "Aplicacion/inicio.html", {'url':imagen})
 
 # Vista para agregar un profesor
 def profesor(request):
@@ -182,18 +184,18 @@ class BlogDetalle(DetailView):
 # Vista para crear Blogs usando Clases (CRUD con Clases)
 class BlogCreacion(CreateView):
     model = Blog
-    success_url = "/Aplicacion/Blog/blog/lista"
+    success_url = "/Aplicacion/blog/lista"
     fields = ['titulo', 'subtitulo', 'contenido', 'autor']
 
 # Vista para mostrar/ actualizar los BLogs usando Clases (CRUD con Clases)
 class BlogUpdate(UpdateView):
     model = Blog
-    success_url = "/Aplicacion/Blog/blog/lista"
+    success_url = "/Aplicacion/blog/lista"
     fields = ['titulo', 'subtitulo', 'contenido', 'autor']
 
 class BlogDelete(DeleteView):
     model = Blog
-    success_url = "/Aplicacion/Blog/blog/lista"
+    success_url = "/Aplicacion/blog/lista"
 
 
 # Vista para mostrar el listado de Profesores usando Clases (login required Mixin).
@@ -209,19 +211,19 @@ class ProfesorDetalle(DetailView):
 # Vista para agregar Profesores usando Clases (CRUD con Clases)
 class ProfesorCreacion(CreateView):
     model = Profesor
-    success_url = "/Aplicacion/Profesores/profesor/lista"
+    success_url = "/Aplicacion/profesor/lista"
     fields = ['nombre', 'apellido', 'email', 'comision']
 
 # Vista para mostrar/ actualizar los Profesores usando Clases (CRUD con Clases)
 class ProfesorUpdate(UpdateView):
     model = Profesor
-    success_url = "/Aplicacion/Profesores/profesor/lista"
+    success_url = "/Aplicacion/profesor/lista"
     fields = ['nombre', 'apellido', 'email', 'comision']
 
 # Eliminar Profesores
 class ProfesorDelete(DeleteView):
     model = Profesor
-    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    success_url = "/Aplicacion/estudiante/lista"
 
 
 # Vista para mostrar el listado de Estudiantes usando Clases (login required Mixin).
@@ -237,16 +239,16 @@ class EstudianteDetalle(DetailView):
 # Vista para agregar Estudiantes usando Clases (CRUD con Clases)
 class EstudianteCreacion(CreateView):
     model = Estudiante
-    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    success_url = "/Aplicacion/estudiante/lista"
     fields = ['nombre', 'apellido', 'email', 'comision']
 
 # Vista para mostrar/ actualizar los Estudiantes usando Clases (CRUD con Clases)
 class EstudianteUpdate(UpdateView):
     model = Estudiante
-    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    success_url = "/Aplicacion/estudiante/lista"
     fields = ['nombre', 'apellido', 'email', 'comision']
 
 # Eliminar Estudiantes
 class EstudianteDelete(DeleteView):
     model = Estudiante
-    success_url = "/Aplicacion/Estudiantes/estudiante/lista"
+    success_url = "/Aplicacion/estudiante/lista"

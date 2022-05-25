@@ -1,6 +1,5 @@
 from django.contrib import admin
-from .models import Avatar, Profesor, Estudiante, Blog
-# el * tmb puede importar todos los modelos
+from .models import *
 
 admin.site.register(Profesor)
 admin.site.register(Estudiante)

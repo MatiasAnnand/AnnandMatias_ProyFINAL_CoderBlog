@@ -3,14 +3,16 @@
 {% block contenidoModificable %}
 
     <h1>Coder Estudiantes</h1>
+    <br>
 
 {% endblock %}
 
 {% block contenido2 %}
     
-    <a style="color:greenyellow" href="{% url 'StudentCreate' %}">Crear</a>
+    <a style="color:greenyellow" href="{% url 'StudentCreate' %}"><h3>Crear</h3></a>
 
     <ul>
+        <br>
         {% for estudiante in object_list %}
 
         <li>

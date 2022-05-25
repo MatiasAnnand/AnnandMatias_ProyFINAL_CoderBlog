@@ -3,14 +3,35 @@
 {% block contenidoModificable %}
 
     <h1>Coder Blogs</h1>
+    <br>
 
 {% endblock %}
 
 {% block contenido2 %}
     
-    <a style="color:greenyellow" href="{% url 'Create' %}">Crear</a>
-
     <ul>
+        {% if user.is_authenticated %}
+        <!-- Search widget -->
+        <div class="card mb-4">
+            <form action="/Aplicacion/buscar/" method="GET">
+                <div class="card-header text-black">Buscar Blog</div>
+                <div class="card-body">
+                    <div class="input-group">
+                        <input class="form-control" type="text" placeholder="Ingresar el Titulo..." name="titulo" id="titulo" />
+                        <input type="submit" value="Buscar"/>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+        {% endif %}  
+
+        <br>
+
+        <a style="color:greenyellow" href="{% url 'Create' %}"><h3>Crear</h3></a>
+
+        <br>
+
         {% for blog in object_list %}
 
         <li>
@@ -27,7 +48,8 @@
 
         </li>
 
-        {% endfor %}
+        {% endfor %}              
+                        
 
     </ul>
 

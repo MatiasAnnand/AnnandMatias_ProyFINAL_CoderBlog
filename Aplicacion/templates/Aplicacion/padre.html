@@ -47,6 +47,7 @@
 
                                                
                         <a class="btn btn-primary" href="{% url 'Logout' %}">Salir</a>
+                        
                         {% endif %}
 
 
@@ -67,6 +68,7 @@
                 <div class="d-flex justify-content-center">
                     <div class="text-center text-white">
                         <h1 class="mx-auto my-0 text-uppercase">
+
                         {% block contenidoModificable %}
 
                         {% endblock %}
@@ -74,6 +76,8 @@
                         
                         {% block contenido2 %}
                         {% endblock %}
+                        
+                        
                     </div>
                 </div>
             </div>

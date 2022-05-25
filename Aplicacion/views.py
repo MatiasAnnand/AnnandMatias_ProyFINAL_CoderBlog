@@ -171,6 +171,11 @@ def buscar(request):
 
     return HttpResponse(respuesta)
 
+
+def about(request):
+    return render(request, 'Aplicacion/about.html')
+
+
 # Vista para mostrar los Posteos del Blog usando Clases (login required Mixin).
 class MuroBlog(LoginRequiredMixin, ListView):
     model = Blog

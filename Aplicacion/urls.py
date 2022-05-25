@@ -9,6 +9,7 @@ urlpatterns = [
     path('', views.inicio, name='Inicio'),  # URL para la vista por defecto creada en views.py
     path('busquedaBlog/', views.busquedaBlog, name="BusquedaBlog"),
     path('buscar/', views.buscar),
+    path('about', views.about, name='aboutMe'),
 
     path("blog/lista", views.MuroBlog.as_view(), name='ListBlogs'),
     re_path(r'^(?P<pk>\d+)$', views.BlogDetalle.as_view(), name='Detail'),
